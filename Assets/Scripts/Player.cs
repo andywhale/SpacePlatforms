@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour {
 
@@ -15,7 +16,7 @@ public class Player : MonoBehaviour {
 	void FixedUpdate () {
         if (GvrControllerInput.ClickButton)
         {
-            GetComponent<Rigidbody>().AddForce(cameraAngle.forward * Time.deltaTime * 8.0f, ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(cameraAngle.forward * Time.deltaTime * 12.0f, ForceMode.Impulse);
         }
         if (GvrControllerInput.ClickButtonDown)
         {
@@ -25,6 +26,18 @@ public class Player : MonoBehaviour {
         {
             StopPlayer();
         }
+    }
+
+    public void Steer(Vector2 newAngle)
+    {
+        cameraAngle.rotation = Quaternion.Euler(cameraAngle.eulerAngles.x + newAngle.x, cameraAngle.eulerAngles.y + newAngle.y, cameraAngle.eulerAngles.z);
+    }
+
+    public void MoveForward(float speed)
+    {
+        //GetComponent<Rigidbody>().AddForce(cameraAngle.forward * Time.deltaTime * speed, ForceMode.Acceleration);
+        Vector3 newPosition = transform.position + cameraAngle.GetComponent<Transform>().transform.forward * speed * Time.deltaTime;
+        transform.position = new Vector3(newPosition.x, newPosition.y, newPosition.z);
     }
 
     public void StopPlayer()

@@ -24,6 +24,14 @@ public class ScoreScript : MonoBehaviour {
         }
 
         messages[6] = "[NASA] Platform 6 ... you think platform hopping is tedious try having to announce it";
+        messages[7] = "[NASA] Plus if you don't hop you'll die ... so no point complaining";
+
+        messages[9] = "[NASA] Try and avoid panicking ... but the platforms have started moving";
+        messages[10] = "[NASA] Don't get us wrong ... you have every reason to panic ... it just won't help";
+
+        messages[12] = "[NASA] Of course we're not making them move ... we're investigating the cause";
+        messages[13] = "[NASA] - RADIO SILENCE -";
+
     }
 
 	void FixedUpdate () {

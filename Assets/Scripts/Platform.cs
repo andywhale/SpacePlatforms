@@ -10,7 +10,7 @@ public class Platform : MonoBehaviour {
     private void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        if (gameManager.GetLevel() > 5)
+        if (gameManager.GetLevel() > 8)
         {
             EngageMovement();
         }
@@ -29,6 +29,13 @@ public class Platform : MonoBehaviour {
 
     public void EngageMovement()
     {
-        GetComponent<Rigidbody>().AddForce(transform.forward * 5.0f * Time.deltaTime, ForceMode.Acceleration);
+        if (Random.Range(0, 2) == 0)
+        {
+            GetComponent<Rigidbody>().AddForce(transform.up * -6.0f * Time.deltaTime, ForceMode.Impulse);
+        }
+        else
+        {
+            GetComponent<Rigidbody>().AddForce(transform.forward * 10.0f * Time.deltaTime, ForceMode.Impulse);
+        }
     }
 }
