@@ -31,11 +31,11 @@ public class Platform : MonoBehaviour {
     {
         if (Random.Range(0, 2) == 0)
         {
-            GetComponent<Rigidbody>().AddForce(transform.up * -6.0f * Time.deltaTime, ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(transform.up * -20.0f * Time.deltaTime, ForceMode.Acceleration);
         }
         else
         {
-            GetComponent<Rigidbody>().AddForce(transform.forward * 10.0f * Time.deltaTime, ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(transform.forward * 20.0f * Time.deltaTime, ForceMode.Acceleration);
         }
     }
 }

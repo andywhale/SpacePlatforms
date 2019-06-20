@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 54123234963036390}
   - component: {fileID: 64005977144444424}
   - component: {fileID: 114090220903505970}
+  - component: {fileID: 114184561245084276}
   m_Layer: 0
   m_Name: StarSparrow3
   m_TagString: Ship
@@ -365,3 +366,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f0133adbc0545b882ebc65f3a29df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114184561245084276
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1404724577958374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []

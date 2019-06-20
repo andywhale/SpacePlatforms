@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -17,6 +18,12 @@ public class GameManager : MonoBehaviour {
     private GameObject[] shipInstances;
 
     private int level = 0;
+
+    public void FixedUpdate()
+    {
+        if (GvrControllerInput.AppButton)
+            RestartCurrentLevel();
+    }
 
     void Start () {
         player = GameObject.FindWithTag("Player");
@@ -45,29 +52,11 @@ public class GameManager : MonoBehaviour {
             artefactInstances[i] = Instantiate(artefactType, artefactPosition, Quaternion.identity);
             artefactInstances[i].transform.SetParent(ArtefactContainer.transform);
         }
-        DeployPlatform();
     }
 
-    void DeployPlatform()
+    public void RestartCurrentLevel()
     {
-        Vector3 platformPosition = new Vector3(
-                player.transform.position.x + Random.Range(15, 30),
-                player.transform.position.y + Random.Range(-5, 10),
-                player.transform.position.z + Random.Range(-10, 10)
-                );
-        Instantiate(platform, platformPosition, Quaternion.identity);
-    }
-
-    public void PlatformHit(GameObject platform)
-    {
-        Platform platformScript = platform.GetComponent<Platform>();
-        if (platformScript.IsActive())
-        {
-            platformScript.Deactivate();
-            DeployPlatform();
-            player.GetComponent<Player>().StopPlayer();
-            level ++;
-        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public int GetLevel()
