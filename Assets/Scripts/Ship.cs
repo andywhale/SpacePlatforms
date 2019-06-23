@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Ship : Hittable {
-
+public class Ship : Hittable
+{
     void FixedUpdate()
     {
         GetComponent<Rigidbody>().AddForce(transform.forward * Time.deltaTime * 8.0f);

@@ -6,52 +6,49 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
-    [SerializeField] GameObject platform;
-    [SerializeField] GameObject[] artefactTypes;
-    [SerializeField] int numberOfArtefacts;
-    [SerializeField] GameObject[] shipTypes;
-    [SerializeField] int numberOfShips;
-    [SerializeField] float areaMin = -100;
-    [SerializeField] float areaMax = 100;
-    private GameObject player;
-    private GameObject[] artefactInstances;
-    private GameObject[] shipInstances;
+    //private float timer = 100.0f;
+    //const float TIMERMAX = 100.0f;
 
     private int level = 0;
 
+    private bool gameOver = false;
+
     public void FixedUpdate()
     {
+        if (!GameIsOver())
+        {
+            UpdateScore();
+        }
         if (GvrControllerInput.AppButton)
-            RestartCurrentLevel();
+            NextLevel();
     }
 
-    void Start () {
-        player = GameObject.FindWithTag("Player");
-        shipInstances = new GameObject[numberOfShips];
-        GameObject ArtefactContainer = GameObject.Find("Artefacts");
-        for (int i = 0; i < numberOfShips; i++)
+    public bool GameIsOver()
+    {
+        return gameOver;
+    }
+
+    private void UpdateScore()
+    {
+        float totalScore = 0;
+        GameObject[] artefacts = GameObject.FindGameObjectsWithTag("Artefact");
+        float totalArtefacts = artefacts.Length;
+        for (var i = 0; i < artefacts.Length; i++)
         {
-            GameObject shipType = shipTypes[Random.Range(0, shipTypes.Length)];
-            Vector3 shipPosition = new Vector3(
-                player.transform.position.x + Random.Range(areaMin, areaMax),
-                player.transform.position.y + Random.Range(areaMin, areaMax),
-                player.transform.position.z + Random.Range(areaMin, areaMax)
-                );
-            shipInstances[i] = Instantiate(shipType, shipPosition, Quaternion.identity);
-            shipInstances[i].transform.SetParent(ArtefactContainer.transform);
+            totalScore += artefacts[i].GetComponent<Asteroid>().getScore();
         }
-        artefactInstances = new GameObject[numberOfArtefacts];
-        for (int i = 0; i < numberOfArtefacts; i ++)
+        float totalComplete = totalScore / totalArtefacts;
+        GameObject.FindGameObjectWithTag("ScoreUI").GetComponent<Image>().fillAmount = totalComplete;
+        if (Mathf.Approximately(totalComplete, 1))
         {
-            GameObject artefactType = artefactTypes[Random.Range(0, artefactTypes.Length)];
-            Vector3 artefactPosition = new Vector3(
-                player.transform.position.x + Random.Range(areaMin, areaMax),
-                player.transform.position.y + Random.Range(areaMin, areaMax),
-                player.transform.position.z + Random.Range(areaMin, areaMax)
-                );
-            artefactInstances[i] = Instantiate(artefactType, artefactPosition, Quaternion.identity);
-            artefactInstances[i].transform.SetParent(ArtefactContainer.transform);
-        }
+            NextLevel();
+        } 
+    }
+
+    private void NextLevel()
+    {
+        level++;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void RestartCurrentLevel()
@@ -62,5 +59,32 @@ public class GameManager : MonoBehaviour {
     public int GetLevel()
     {
         return level;
+    }
+
+    //private void UpdateTimer()
+    //{
+    //    if (Mathf.Approximately(timer, 0.0f) || timer < 0.0f)
+    //    {
+    //        gameOver = true;
+    //        RestartCurrentLevel();
+    //    }
+    //    else
+    //    {
+    //        timer -= Time.deltaTime;
+    //    }
+    //    UpdateTimerUI();
+    //}
+
+    //void UpdateTimerUI()
+    //{
+    //    GameObject[] timers = GameObject.FindGameObjectsWithTag("TimerUI");
+    //    for (var i = 0; i < timers.Length; i++)
+    //    {
+    //        timers[i].GetComponent<TimerScript>().UpdateTimer(timer, TIMERMAX);
+    //    }
+    //}
+
+    void Start () {
+        
     }
 }
